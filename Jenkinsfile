@@ -28,7 +28,12 @@ pipeline {
 
         stage('Container') {
             steps {
-                buildDockerAndPublishImage('uplink', [unstash: 'build', targetplatforms: 'linux/amd64,linux/arm64', disablePublication: !infra.isInfra()])
+                buildDockerAndPublishImage('uplink', [
+                  unstash: 'build',
+                  targetplatforms: 'linux/arm64',
+                  publishToPrivateAzureRegistry: true,
+                  disablePublication: !infra.isInfra(),
+                ])
             }
         }
     }
